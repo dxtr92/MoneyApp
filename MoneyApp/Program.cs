@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace MoneyApp
 {
@@ -167,23 +167,11 @@ namespace MoneyApp
 
     class Program
     {
-        // Метод для безопасного ввода рублей (long)
-        static long GetRubles(string prompt)
+        // Метод для ввода рублей (string)
+        static string GetRubles(string prompt)
         {
-            while (true)
-            {
-                Console.Write(prompt);
-                string input = Console.ReadLine();
-                // Проверяем, что введено корректное целое число
-                if (long.TryParse(input, out long result))
-                {
-                    return result; // Возвращаем введенное число
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка: введите целое число (например, 100)!");
-                }
-            }
+            Console.Write(prompt);
+            return Console.ReadLine(); // Принимаем любой ввод как строку
         }
 
         // Метод для безопасного ввода копеек (byte)
@@ -200,7 +188,7 @@ namespace MoneyApp
                 }
                 else
                 {
-                    Console.WriteLine("Ошибка: введите число от 0 до 99 (например, 50)!");
+                    Console.WriteLine("Пожалуйста, введите число от 0 до 99 (например, 50)!");
                 }
             }
         }
@@ -219,7 +207,7 @@ namespace MoneyApp
                 }
                 else
                 {
-                    Console.WriteLine("Ошибка: введите число (например, 2,5)!");
+                    Console.WriteLine("Пожалуйста, введите число (например, 2,5)!");
                 }
             }
         }
@@ -231,14 +219,18 @@ namespace MoneyApp
 
             // Запрашиваем первую сумму
             Console.WriteLine("Введите первую сумму:");
-            long rubles1 = GetRubles("Рубли: "); // Безопасный ввод рублей
+            string rublesInput1 = GetRubles("Рубли: "); // Ввод рублей как строка
+            // Пытаемся преобразовать в long, если не удается — устанавливаем 0
+            long rubles1 = long.TryParse(rublesInput1, out long result1) ? result1 : 0;
             byte kopecks1 = GetKopecks("Копейки: "); // Безопасный ввод копеек
             Money sum1 = new Money(rubles1, kopecks1); // Создаем первую сумму
             Console.WriteLine("Первая сумма: " + sum1);
 
             // Запрашиваем вторую сумму
             Console.WriteLine("Введите вторую сумму:");
-            long rubles2 = GetRubles("Рубли: "); // Безопасный ввод рублей
+            string rublesInput2 = GetRubles("Рубли: "); // Ввод рублей как строка
+            // Пытаемся преобразовать в long, если не удается — устанавливаем 0
+            long rubles2 = long.TryParse(rublesInput2, out long result2) ? result2 : 0;
             byte kopecks2 = GetKopecks("Копейки: "); // Безопасный ввод копеек
             Money sum2 = new Money(rubles2, kopecks2); // Создаем вторую сумму
             Console.WriteLine("Вторая сумма: " + sum2);
@@ -248,7 +240,7 @@ namespace MoneyApp
             double divisor2 = GetDouble("Введите число для деления второй суммы (например, 3): ");
             double multiplier = GetDouble("Введите число для умножения (например, 1.5): ");
 
-            // Выполнение операций в новом порядке
+            // Выполнение операций в требуемом порядке
             try
             {
                 // Сложение
@@ -267,7 +259,7 @@ namespace MoneyApp
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Ошибка при делении сумм: " + e.Message);
+                    Console.WriteLine("Нельзя выполнить деление сумм: " + e.Message);
                 }
 
                 // Деление первой суммы на число
@@ -278,7 +270,7 @@ namespace MoneyApp
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Ошибка при делении первой суммы: " + e.Message);
+                    Console.WriteLine("Нельзя выполнить деление первой суммы: " + e.Message);
                 }
 
                 // Деление второй суммы на число
@@ -289,7 +281,7 @@ namespace MoneyApp
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Ошибка при делении второй суммы: " + e.Message);
+                    Console.WriteLine("Нельзя выполнить деление второй суммы: " + e.Message);
                 }
 
                 // Умножение первой суммы на число
@@ -311,7 +303,7 @@ namespace MoneyApp
             }
             catch (Exception e)
             {
-                Console.WriteLine("Ошибка: " + e.Message);
+                Console.WriteLine("Произошла ошибка: " + e.Message);
             }
 
             // Ждем, чтобы пользователь увидел результат
