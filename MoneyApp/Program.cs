@@ -174,21 +174,21 @@ namespace MoneyApp
             return Console.ReadLine(); // Принимаем любой ввод как строку
         }
 
-        // Метод для безопасного ввода копеек (byte)
+        // Метод для ввода копеек (ОШИБКА ЗДЕСЬ)
         static byte GetKopecks(string prompt)
         {
             while (true)
             {
                 Console.Write(prompt);
                 string input = Console.ReadLine();
-                // Проверяем, что введено число и оно в диапазоне 0–99
-                if (int.TryParse(input, out int result) && result >= 0 && result <= 99)
+                // Проверяем только, что введено целое число (ошибка: нет проверки 0–99)
+                if (int.TryParse(input, out int result))
                 {
-                    return (byte)result; // Возвращаем введенное число как byte
+                    return (byte)result; // Приводим к byte, даже если число > 99 или < 0
                 }
                 else
                 {
-                    Console.WriteLine("Пожалуйста, введите число от 0 до 99 (например, 50)!");
+                    Console.WriteLine("Пожалуйста, введите целое число!");
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace MoneyApp
             string rublesInput1 = GetRubles("Рубли: "); // Ввод рублей как строка
             // Пытаемся преобразовать в long, если не удается — устанавливаем 0
             long rubles1 = long.TryParse(rublesInput1, out long result1) ? result1 : 0;
-            byte kopecks1 = GetKopecks("Копейки: "); // Безопасный ввод копеек
+            byte kopecks1 = GetKopecks("Копейки: "); // Ввод копеек (с ошибкой)
             Money sum1 = new Money(rubles1, kopecks1); // Создаем первую сумму
             Console.WriteLine("Первая сумма: " + sum1);
 
@@ -231,7 +231,7 @@ namespace MoneyApp
             string rublesInput2 = GetRubles("Рубли: "); // Ввод рублей как строка
             // Пытаемся преобразовать в long, если не удается — устанавливаем 0
             long rubles2 = long.TryParse(rublesInput2, out long result2) ? result2 : 0;
-            byte kopecks2 = GetKopecks("Копейки: "); // Безопасный ввод копеек
+            byte kopecks2 = GetKopecks("Копейки: "); // Ввод копеек (с ошибкой)
             Money sum2 = new Money(rubles2, kopecks2); // Создаем вторую сумму
             Console.WriteLine("Вторая сумма: " + sum2);
 
