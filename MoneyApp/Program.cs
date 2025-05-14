@@ -171,17 +171,17 @@ namespace MoneyApp
         static string GetRubles(string prompt)
         {
             Console.Write(prompt);
-            return Console.ReadLine(); // Принимаем любой ввод как строку
+            return Console.ReadLine(); // здесь нужно принимать только численные значения, а не любые символы
         }
 
-        // Метод для ввода копеек (ОШИБКА ЗДЕСЬ)
+        // Метод для ввода копеек (ошибка здесь)
         static byte GetKopecks(string prompt)
         {
             while (true)
             {
                 Console.Write(prompt);
                 string input = Console.ReadLine();
-                // Проверяем только, что введено целое число (ошибка: нет проверки 0–99)
+                // Проверяем только, что введено целое число (НЕТ ПРОВЕРКИ 0-99)
                 if (int.TryParse(input, out int result))
                 {
                     return (byte)result; // Приводим к byte, даже если число > 99 или < 0
